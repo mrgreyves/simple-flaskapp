@@ -2,16 +2,16 @@ name: Build simple flask app image
 on: push
 
 jobs:
-  lint-dockerfile:
-    name: Check dockerfile
-    runs-on: ubuntu-latest
-    container: docker:19-dind
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  # lint-dockerfile:
+  #   name: Check dockerfile
+  #   runs-on: ubuntu-latest
+  #   container: docker:19-dind
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
 
-      - name: Hadolint - check dockerfile
-        run: docker run --rm -i hadolint/hadolint:latest-alpine hadolint - <./Dockerfile
+  #     - name: Hadolint - check dockerfile
+  #       run: docker run --rm -i hadolint/hadolint:latest-alpine hadolint - <./Dockerfile
 
   build-image:
     name: Build flaskapp image
@@ -23,17 +23,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build image
-        run: |
-          docker build -t mrgreyves/flaskapp:${GITHUB_SHA::6} .
-          docker images
+      # - name: Build image
+      #   run: |
+      #     docker build -t mrgreyves/flaskapp:${GITHUB_SHA::6} .
+      #     docker images
 
       - name: Push image in dockerhub
-        shell: bash
+        shell: sh
         env:
           dockerhub_user: ${{ secrets.dockerhub_user }}
           dockerhub_pwd: ${{ secrets.dockerhub_pwd }}
         run: |
           echo ${{ secrets.dockerhub_pwd }} | docker login -u ${{ secrets.dockerhub_user }} --password-stdin
-          docker push mrgreyves/flaskapp:${GITHUB_SHA::6}
-          docker logout
+#          docker push mrgreyves/flaskapp:${GITHUB_SHA::6}
+#          docker logout
