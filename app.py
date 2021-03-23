@@ -6,7 +6,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
 
-time.sleep(30)
+#time.sleep(30)
 
 @app.route('/')
 def hello_world():
