@@ -15,9 +15,6 @@ jobs:
 
   build-image:
     name: Build flaskapp image
-    with:
-      dockerhub_user: ${{ secrets.dockerhub_user }}
-      dockerhub_pwd: ${{ secrets.dockerhub_pwd }}
     runs-on: ubuntu-latest
     container: docker:19-dind
     needs: lint-dockerfile
@@ -32,6 +29,9 @@ jobs:
           docker images
 
       - name: Push image in dockerhub
+        with:
+          dockerhub_user: ${{ secrets.dockerhub_user }}
+          dockerhub_pwd: ${{ secrets.dockerhub_pwd }}
         run: |
           docker login -u "${dockerhub_user}" -p "${dockerhub_pwd}"
           docker push mrgreyves/flaskapp:${GITHUB_SHA::6}
