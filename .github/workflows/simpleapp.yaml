@@ -29,6 +29,7 @@ jobs:
           docker images
 
       - name: Push image in dockerhub
+        shell: bash
         env:
           dockerhub_user: ${{ secrets.dockerhub_user }}
           dockerhub_pwd: ${{ secrets.dockerhub_pwd }}
