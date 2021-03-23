@@ -1,0 +1,29 @@
+name: Build simple flask app image
+on: push
+
+jobs:
+  lint-dockerfile:
+    name: Check dockerfile
+    runs-on: ubuntu-latest
+    container: docker:19-dind
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Hadolint - check dockerfile
+        run: docker run --rm -i hadolint/hadolint:latest-alpine hadolint - <./Dockerfile
+
+  build-image:
+    name: Build flaskapp image
+    runs-on: ubuntu-latest
+    container: docker:19-dind
+    needs: lint-dockerfile
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build image
+        run: |
+          docker build -t mrgreyves/flaskapp:${GITHUB_SHA::6} .
+          docker images
