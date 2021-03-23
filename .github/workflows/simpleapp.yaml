@@ -31,8 +31,8 @@ jobs:
       - name: Push image in dockerhub
         shell: sh
         env:
-          dockerhub_user: ${{ secrets.dockerhub_user }}
-          dockerhub_pwd: ${{ secrets.dockerhub_pwd }}
+          dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
+          dockerhub_pwd: ${{ secrets.DOCKERHUB_PWD }}
         run: |
           docker login -u "$dockerhub_user" -p "$dockerhub_pwd"
           docker push mrgreyves/flaskapp:${GITHUB_SHA::6}
