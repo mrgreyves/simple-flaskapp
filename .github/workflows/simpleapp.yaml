@@ -25,8 +25,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -t mrgreyves/flaskapp:${GITHUB_SHA::6} .
-          docker images
+          echo 1
 
       - name: Push image in dockerhub
         shell: sh
