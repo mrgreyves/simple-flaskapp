@@ -27,3 +27,9 @@ jobs:
         run: |
           docker build -t mrgreyves/flaskapp:${GITHUB_SHA::6} .
           docker images
+
+      - name: Push image in dockerhub
+        run: |
+          docker login -u ${dockerhub_user} -p ${dockerhub_pwd}
+          docker push mrgreyves/flaskapp:${GITHUB_SHA::6}
+          docker logout
