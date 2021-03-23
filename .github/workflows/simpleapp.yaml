@@ -34,6 +34,6 @@ jobs:
           dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
           dockerhub_pwd: ${{ secrets.DOCKERHUB_PWD }}
         run: |
-          docker login -u "$dockerhub_user" -p "$dockerhub_pwd"
+          echo '${{ secrets.DOCKERHUB_PWD }}' | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
           docker push mrgreyves/flaskapp:${GITHUB_SHA::6}
           docker logout
